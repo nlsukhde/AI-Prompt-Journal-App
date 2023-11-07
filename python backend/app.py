@@ -3,10 +3,37 @@ from flask_cors import CORS
 from config import Config
 import mysql.connector
 from operations import create_connection, add_journal_entry, delete_journal_entry, get_single_entry, get_all_entries, edit_single_entry
+from openai import OpenAI
 
 
 app = Flask(__name__)
 CORS(app)
+
+
+client = OpenAI()
+
+
+@app.route("/get-prompt", methods=['POST'])
+def get_prompt():
+    try:
+        completion = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are an insightful journaling coach skilled in creating unique prompts that will help someone explore their most cherished memories."},
+                {"role": "user", "content": "Generate a creative and reflective journal prompt that encourages deep thinking about personal growth and daily experiences."}
+            ]
+        )
+
+        # Extract the message content from the first choice in the response
+        prompt_message = completion.choices[0].message.content
+
+        # Send back the prompt to the frontend in the desired format
+        return jsonify(prompt=prompt_message), 200
+
+    except Exception as e:
+        # It's a good practice to log the exception here
+        print(e)
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route("/api/posts", methods=['POST', 'GET'])
