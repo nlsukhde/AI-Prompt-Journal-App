@@ -13,7 +13,7 @@ CORS(app)
 client = OpenAI()
 
 
-@app.route("/get-prompt", methods=['POST'])
+@app.route("/api/get-prompt", methods=['POST'])
 def get_prompt():
     try:
         completion = client.chat.completions.create(
