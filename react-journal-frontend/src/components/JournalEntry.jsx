@@ -12,7 +12,7 @@ function JournalEntry() {
       const response = await axios.post("http://127.0.0.1:5000/api/posts", {
         title: title,
         content: entry,
-        prompt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+        prompt: window.name,
         date: new Date().toISOString().split("T")[0], // Gets current date in 'YYYY-MM-DD' format
       });
 
