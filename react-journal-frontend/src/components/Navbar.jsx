@@ -1,6 +1,7 @@
 import { Box, Flex, Text, Spacer, Button, ButtonGroup } from "@chakra-ui/react";
 
-function Navbar() {
+//need to track state if user is logged in already
+function Navbar({ onLoginClick }) {
   return (
     <Box bg="brand.700" p={4}>
       <Flex>
@@ -9,7 +10,11 @@ function Navbar() {
         </Text>
         <Spacer />
         <ButtonGroup>
-          <Button colorScheme="blackAlpha" variant="ghost">
+          <Button
+            onClick={onLoginClick}
+            colorScheme="blackAlpha"
+            variant="ghost"
+          >
             Log in
           </Button>
           <Button colorScheme="blackAlpha" variant="ghost">

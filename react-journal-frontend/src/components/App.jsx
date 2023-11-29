@@ -5,15 +5,18 @@ import JournalEntry from "./JournalEntry";
 import Navbar from "./Navbar";
 import Prompt from "./Prompt";
 import { Auth } from "./Auth";
-import LoginPage from "./LoginPage";
+import HomePage from "./HomePage";
+import { useDisclosure } from "@chakra-ui/react";
+import LoginModal from "./LoginModal";
 
 function App() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
-      <Navbar></Navbar>
-      <LoginPage></LoginPage>
-      <Prompt></Prompt>
-      <JournalEntry></JournalEntry>
+      <Navbar onLoginClick={onOpen} /> {/* Pass the onOpen to Navbar */}
+      <LoginModal isOpen={isOpen} onClose={onClose} />
+      <HomePage></HomePage>
     </>
   );
 }
