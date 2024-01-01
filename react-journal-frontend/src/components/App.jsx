@@ -4,18 +4,17 @@ import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 import JournalEntry from "./JournalEntry";
 import Navbar from "./Navbar";
 import Prompt from "./Prompt";
-import { Auth } from "./Auth";
 import HomePage from "./HomePage";
 import { useDisclosure } from "@chakra-ui/react";
-import LoginModal from "./LoginModal";
+import CreateModal from "./CreateModal";
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <Navbar onLoginClick={onOpen} /> {/* Pass the onOpen to Navbar */}
-      <LoginModal isOpen={isOpen} onClose={onClose} />
+      <Navbar onCreateClick={onOpen} /> {/* Pass the onOpen to Navbar */}
+      <CreateModal isOpen={isOpen} onClose={onClose} />
       <HomePage></HomePage>
     </>
   );

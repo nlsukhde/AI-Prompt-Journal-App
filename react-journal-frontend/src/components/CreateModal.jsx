@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { auth } from "../firebase-config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
   Modal,
   ModalOverlay,
@@ -13,21 +15,25 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-function LoginModal({ isOpen, onClose }) {
+function CreateModal({ isOpen, onClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleCreate = async () => {
     // Implement your login logic here
-    console.log(email, password);
-    onClose(); // Close the modal after login
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.error(err);
+    }
+    onClose(); // Close the modal after account creation
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Login</ModalHeader>
+        <ModalHeader>Make an Account</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl>
@@ -51,8 +57,8 @@ function LoginModal({ isOpen, onClose }) {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleLogin}>
-            Log in
+          <Button colorScheme="blue" mr={3} onClick={handleCreate}>
+            Create Account
           </Button>
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
@@ -61,4 +67,4 @@ function LoginModal({ isOpen, onClose }) {
   );
 }
 
-export default LoginModal;
+export default CreateModal;
