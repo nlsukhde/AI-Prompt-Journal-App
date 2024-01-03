@@ -17,7 +17,7 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -28,7 +28,7 @@ import {
 } from "@chakra-ui/react";
 
 //need to track state if user is logged in already
-function Navbar({ onCreateClick }) {
+function Navbar({ loginStatus, onCreateClick, onLoginClick }) {
   //for side panel
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
@@ -48,8 +48,12 @@ function Navbar({ onCreateClick }) {
           >
             Create account
           </Button>
-          <Button colorScheme="blackAlpha" variant="ghost">
-            Log in
+          <Button
+            colorScheme="blackAlpha"
+            variant="ghost"
+            onClick={onLoginClick}
+          >
+            {loginStatus}
           </Button>
           <Button
             variant="ghost"

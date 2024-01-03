@@ -7,15 +7,40 @@ import Prompt from "./Prompt";
 import HomePage from "./HomePage";
 import { useDisclosure } from "@chakra-ui/react";
 import CreateModal from "./CreateModal";
+import LoginModal from "./LoginModal";
 
 function App() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // Disclosure for Create Account Modal
+  const {
+    isOpen: isCreateModalOpen,
+    onOpen: onOpenCreateModal,
+    onClose: onCloseCreateModal,
+  } = useDisclosure();
+
+  // Disclosure for Login Modal
+  const {
+    isOpen: isLoginModalOpen,
+    onOpen: onOpenLoginModal,
+    onClose: onCloseLoginModal,
+  } = useDisclosure();
+
+  const [loginStatus, setLoginStatus] = useState("Log in");
 
   return (
     <>
-      <Navbar onCreateClick={onOpen} /> {/* Pass the onOpen to Navbar */}
-      <CreateModal isOpen={isOpen} onClose={onClose} />
-      <HomePage></HomePage>
+      <Navbar
+        onCreateClick={onOpenCreateModal}
+        onLoginClick={onOpenLoginModal}
+        loginStatus={loginStatus}
+        setLoginStatus={setLoginStatus}
+      />
+      <CreateModal isOpen={isCreateModalOpen} onClose={onCloseCreateModal} />
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={onCloseLoginModal}
+        setLoginStatus={setLoginStatus}
+      />
+      <HomePage />
     </>
   );
 }

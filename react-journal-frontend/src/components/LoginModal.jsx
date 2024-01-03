@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { auth } from "../firebase-config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import {
   Modal,
   ModalOverlay,
@@ -16,19 +19,21 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-function CreateModal({ isOpen, onClose }) {
+function LoginModal({ isOpen, onClose, setLoginStatus }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
 
-  const handleCreate = async () => {
+  const handleLogin = async () => {
     // Implement your login logic here
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
+
+      setLoginStatus(`Hello, ${email}`);
 
       toast({
-        title: "Account created.",
-        description: "Your account has been created",
+        title: "Login success.",
+        description: "you are logged in",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -36,7 +41,7 @@ function CreateModal({ isOpen, onClose }) {
     } catch (err) {
       console.error(err);
       toast({
-        title: "Account failed to create",
+        title: "failed to log in",
         description: "womp womp",
         status: "error",
         duration: 5000,
@@ -51,7 +56,7 @@ function CreateModal({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Make an Account</ModalHeader>
+        <ModalHeader>Login to Your Account</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl>
@@ -75,8 +80,8 @@ function CreateModal({ isOpen, onClose }) {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleCreate}>
-            Create Account
+          <Button colorScheme="blue" mr={3} onClick={handleLogin}>
+            Login
           </Button>
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
@@ -85,4 +90,4 @@ function CreateModal({ isOpen, onClose }) {
   );
 }
 
-export default CreateModal;
+export default LoginModal;
