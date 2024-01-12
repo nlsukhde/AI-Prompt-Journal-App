@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Input, Textarea, Button, VStack, useToast } from "@chakra-ui/react";
 import axios from "axios";
+import { useUser } from "./UserContext";
 
 function JournalEntry() {
   const [title, setTitle] = useState("");
   const [entry, setEntry] = useState("");
   const toast = useToast();
+
+  const { user } = useUser();
 
   const handleSubmit = async () => {
     try {
@@ -14,6 +17,7 @@ function JournalEntry() {
         content: entry,
         prompt: window.name,
         date: new Date().toISOString().split("T")[0], // Gets current date in 'YYYY-MM-DD' format
+        user_id: user.uid,
       });
 
       // Handle success

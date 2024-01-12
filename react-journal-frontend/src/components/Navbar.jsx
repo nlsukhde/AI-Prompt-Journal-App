@@ -1,3 +1,4 @@
+import { useUser } from "./UserContext";
 import {
   Box,
   Flex,
@@ -30,6 +31,14 @@ import {
 //need to track state if user is logged in already
 function Navbar({ loginStatus, onCreateClick, onLoginClick }) {
   //for side panel
+
+  const { user, setUser } = useUser();
+
+  const handleLogout = () => {
+    // Logic for logging out
+    setUser(null);
+  };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 

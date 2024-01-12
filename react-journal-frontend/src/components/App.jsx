@@ -5,6 +5,7 @@ import JournalEntry from "./JournalEntry";
 import Navbar from "./Navbar";
 import Prompt from "./Prompt";
 import HomePage from "./HomePage";
+import { UserProvider } from "./UserContext";
 import { useDisclosure } from "@chakra-ui/react";
 import CreateModal from "./CreateModal";
 import LoginModal from "./LoginModal";
@@ -28,19 +29,21 @@ function App() {
 
   return (
     <>
-      <Navbar
-        onCreateClick={onOpenCreateModal}
-        onLoginClick={onOpenLoginModal}
-        loginStatus={loginStatus}
-        setLoginStatus={setLoginStatus}
-      />
-      <CreateModal isOpen={isCreateModalOpen} onClose={onCloseCreateModal} />
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        onClose={onCloseLoginModal}
-        setLoginStatus={setLoginStatus}
-      />
-      <HomePage />
+      <UserProvider>
+        <Navbar
+          onCreateClick={onOpenCreateModal}
+          onLoginClick={onOpenLoginModal}
+          loginStatus={loginStatus}
+          setLoginStatus={setLoginStatus}
+        />
+        <CreateModal isOpen={isCreateModalOpen} onClose={onCloseCreateModal} />
+        <LoginModal
+          isOpen={isLoginModalOpen}
+          onClose={onCloseLoginModal}
+          setLoginStatus={setLoginStatus}
+        />
+        <HomePage />
+      </UserProvider>
     </>
   );
 }

@@ -31,7 +31,7 @@ def get_prompt():
         return jsonify(prompt=prompt_message), 200
 
     except Exception as e:
-        # It's a good practice to log the exception here
+        # log the exception here
         print(e)
         return jsonify({'error': str(e)}), 500
 
@@ -51,12 +51,16 @@ def add_entry():
     journalTitle = data.get('title')
     journalEntry = data.get('content')
     journalPrompt = data.get('prompt')
+    journalUser = data.get('user_id')
 
-    add_journal_entry(journalDate, journalTitle, journalEntry, journalPrompt)
+    add_journal_entry(journalDate, journalTitle,
+                      journalEntry, journalPrompt, journalUser)
 
     # process data and save to database
 
     return jsonify(message="Entry added successfully"), 201
+
+# needs to be altered to get all entries of specific user
 
 
 def get_entries():

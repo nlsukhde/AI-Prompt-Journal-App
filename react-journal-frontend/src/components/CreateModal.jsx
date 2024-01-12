@@ -65,6 +65,7 @@ function CreateModal({ isOpen, onClose }) {
 
           <FormControl mt={4}>
             <FormLabel>Password</FormLabel>
+
             <Input
               placeholder="Enter password"
               type="password"

@@ -21,14 +21,14 @@ def create_connection():
     return connection
 
 
-def add_journal_entry(date, title, content, prompt):
+def add_journal_entry(date, title, content, prompt, user_id):
     connection = create_connection()
     cursor = connection.cursor()
 
-    insert_query = ("INSERT INTO journal_entries (date, title, content, prompt) "
-                    "VALUES (%s, %s, %s, %s)")
+    insert_query = ("INSERT INTO journal_entries (date, title, content, prompt, user_id) "
+                    "VALUES (%s, %s, %s, %s, %s)")
 
-    data = (date, title, content, prompt)
+    data = (date, title, content, prompt, user_id)
 
     cursor.execute(insert_query, data)
     connection.commit()
@@ -81,11 +81,11 @@ def edit_single_entry(title, content, date, prompt, id):
     connection.close()
 
 
-def get_all_entries():
+def get_all_entries(user_id):
     connection = create_connection()
     cursor = connection.cursor()
 
-    search_query = ("SELECT * FROM journal_entries")
+    search_query = ("SELECT * FROM journal_entries WHERE user_id = %s")
     cursor.execute(search_query)
 
     results = cursor.fetchall()

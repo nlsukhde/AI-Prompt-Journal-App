@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useUser } from "./UserContext";
 import { auth } from "../firebase-config";
 import {
   createUserWithEmailAndPassword,
@@ -20,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 
 function LoginModal({ isOpen, onClose, setLoginStatus }) {
+  const { setUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
@@ -27,7 +29,15 @@ function LoginModal({ isOpen, onClose, setLoginStatus }) {
   const handleLogin = async () => {
     // Implement your login logic here
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+
+      setUser(user);
 
       setLoginStatus(`Hello, ${email}`);
 
